@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-management',
@@ -10,7 +11,7 @@ export class UserManagementComponent implements OnInit {
   users: any[] = [];
   selectedUser: any = null;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -40,6 +41,7 @@ export class UserManagementComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(() => {
       console.log(`User with ID ${id} deleted`);
       this.users = this.users.filter(user => user.id !== id);
+      this.toastr.success('Product deleted successfully', 'Success');
     });
   }
 }
